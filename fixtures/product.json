@@ -1,0 +1,53 @@
+[
+{
+  "model": "main.product",
+  "pk": 1,
+  "fields": {
+    "name": "Бекенд разработчик",
+    "description": "Курс по основам бекенд разработки",
+    "img": "",
+    "category": 1,
+    "price": 100000,
+    "created_at": "2024-03-05",
+    "updated_at": "2024-03-05"
+  }
+},
+{
+  "model": "main.product",
+  "pk": 2,
+  "fields": {
+    "name": "Фронтенд разработчик",
+    "description": "Курс разработки сайтов",
+    "img": "",
+    "category": 1,
+    "price": 120000,
+    "created_at": "2024-03-05",
+    "updated_at": "2024-03-05"
+  }
+},
+{
+  "model": "main.product",
+  "pk": 3,
+  "fields": {
+    "name": "Поварское дело",
+    "description": "Курсовая по поварскому делу",
+    "img": "poducts/повар.jpg",
+    "category": 2,
+    "price": 15000,
+    "created_at": "2024-03-05",
+    "updated_at": "2024-03-05"
+  }
+},
+{
+  "model": "main.product",
+  "pk": 4,
+  "fields": {
+    "name": "Бекенд ДЗ",
+    "description": "Домашняя работа бекенд разработчика",
+    "img": "",
+    "category": 3,
+    "price": 10000,
+    "created_at": "2024-03-09",
+    "updated_at": "2024-03-09"
+  }
+}]

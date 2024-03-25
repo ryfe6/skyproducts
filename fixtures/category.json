@@ -1,0 +1,26 @@
+[
+  {
+  "model": "main.category",
+  "pk": 1,
+  "fields": {
+    "name": "Курсы",
+    "description": "Продаются курсы"
+  }
+},
+{
+  "model": "main.category",
+  "pk": 2,
+  "fields": {
+    "name": "Курсовые",
+    "description": "Продаются курсовые работы"
+  }
+},
+  {
+  "model": "main.category",
+  "pk": 3,
+  "fields": {
+    "name": "Домашняя работа",
+    "description": "Продаются домашние работы"
+  }
+}
+]
