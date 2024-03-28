@@ -6,7 +6,7 @@
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-light">Блог</h1>
                 <p class="lead text-body-secondary">Наш сайт является домашней работой. Тут нет настоящей статьи</p>
-                <a href="{% url 'catalog:create' %}" class="text-black">Добавить статью</a>
+                <a href="{% url 'catalog:create' %}" class="btn bg-black-subtle">Добавить статью</a>
             </div>
         </div>
     </section>
@@ -24,12 +24,11 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <ul class="list-unstyled">
-                                            <li><a href="{% url 'catalog:blog_detail' blog.pk %}" class="text-black">Посмотреть</a>
+                                            <li><a href="{% url 'catalog:blog_detail' blog.pk %}" class="btn btn-primary">Посмотреть</a>
+                                                <a href="{% url 'catalog:blog_update' blog.pk %}" class="btn btn-primary">Изменить</a>
+                                            <a href="{% url 'catalog:blog_delete' blog.pk %}" class="btn btn-primary">Удалить</a>
                                             </li>
-                                            <li><a href="{% url 'catalog:blog_delete' blog.pk %}" class="text-black">Удалить</a>
-                                            </li>
-                                            <li><a href="{% url 'catalog:blog_update' blog.pk %}" class="text-black">Изменить</a>
-                                            </li>
+
 
                                             <li><p class="text-black">{{ blog.content|slice:100 }}</p></li>
                                         </ul>

@@ -2,8 +2,9 @@ import slugify
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
-
-from catalog.models import Product, BlogWrite
+from django.forms import inlineformset_factory
+from catalog.forms import ProductForm, VersionForm
+from catalog.models import Product, BlogWrite, Version
 
 
 # Create your views here.
@@ -22,6 +23,45 @@ class ProductsDetailView(DetailView):
     context_object_name = 'item'
 
 
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    # fields = ('name', 'description', 'img', 'category', 'price', 'created_at', 'updated_at')
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse('catalog:product_update', args=[self.get_object().pk])
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['formset'] = VersionFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = VersionFormset(instance=self.object)
+        return context_data
+
+    def form_valid(self, form):
+        formset = self.get_context_data()['formset']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            form.save()
+
+        return super().form_valid(form)
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:product_list')
+
+
 class BlogListView(ListView):
     model = BlogWrite
 
@@ -33,7 +73,6 @@ class BlogListView(ListView):
 
 class BlogDetailView(DetailView):
     model = BlogWrite
-
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -59,7 +98,6 @@ class BlogUpdateView(UpdateView):
     model = BlogWrite
     fields = ('heading', 'slug', 'content', 'photo', 'created_at', 'is_published', "views_count")
 
-
     def form_valid(self, form):
         if form.is_valid():
             new_blog = form.save()
@@ -74,5 +112,4 @@ class BlogUpdateView(UpdateView):
 class BlogDeleteView(DeleteView):
     model = BlogWrite
     success_url = reverse_lazy('catalog:blog')
-
 

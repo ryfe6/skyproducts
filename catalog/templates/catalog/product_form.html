@@ -1,0 +1,49 @@
+{% extends 'catalog/base.html' %}
+{% load photo_tags %}
+{% block content %}
+    <div class="col-12">
+        <form id="createForm" method="post" enctype="multipart/form-data">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title text-center mb-4">Создать запись</h2>
+
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ form.as_p }}
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Создать</button>
+                                    <a href="{% url 'catalog:product_list' %}" class="btn btn-primary">Назад</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2 class="card-title text-center mb-4">Добавить версию</h2>
+
+
+                                    <div class="mb-3">
+                                        {{ formset.management_form }}
+                                        {% for form in formset.forms %}
+                                            {{ form.as_p }}
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

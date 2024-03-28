@@ -6,26 +6,35 @@
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-light">Главное</h1>
                 <p class="lead text-body-secondary">Наш сайт является домашней работой. Мы тут ничего не продаем.</p>
+                <a href="{% url 'catalog:product_create' %}" class="btn bg-black-subtle">Добавить новый продукт</a>
             </div>
         </div>
     </section>
 
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
-
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for items in object_list %}
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img src="{{ items.img | media_filter }}" class="img-fluid" alt="items photo">
+                            <img src="{{ items.img | media_filter }}"  alt="items photo" height="400" width="420">
                             <div class="card-body">
                                 <p class="card-text">{{ items }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <ul class="list-unstyled">
-                                <li><a href="{% url 'catalog:product_view' items.pk %}" class="text-black">Посмотреть</a></li>
-                                <li><p class="text-black">{{ items.description|slice:100 }}</p></li>
-                </ul>
+                                            <li>
+                                                <a href="{% url 'catalog:product_view' items.pk %}"
+                                                   class="btn btn-primary">Посмотреть</a>
+                                                <a href="{% url 'catalog:product_update' items.pk %}"
+                                                   class="btn btn-primary">Изменить</a>
+                                                <a href="{% url 'catalog:product_delete' items.pk %}"
+                                                   class="btn btn-primary">Удалить</a>
+                                            </li>
+
+                                            <li><p class="text-black">{{ items.description|slice:100 }}</p></li>
+                                        </ul>
+
                                     </div>
                                 </div>
                             </div>
