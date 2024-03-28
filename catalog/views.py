@@ -10,27 +10,42 @@ from catalog.models import Product, BlogWrite, Version
 # Create your views here.
 
 class CatalogListView(ListView):
+    """Класс для вывода главной страницы."""
     model = Product
 
 
 class ContactsView(TemplateView):
+    """Класс для вывода страницы - контактная информация."""
     template_name = 'catalog/contacts.html'
 
 
 class ProductsDetailView(DetailView):
+    """Класс для вывода детальной информации о продукте."""
     model = Product
     template_name = "catalog/product_detail.html"
     context_object_name = 'item'
 
 
 class ProductCreateView(CreateView):
+    """Класс для создания продукта."""
     model = Product
     form_class = ProductForm
     # fields = ('name', 'description', 'img', 'category', 'price', 'created_at', 'updated_at')
     success_url = reverse_lazy('catalog:product_list')
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['formset'] = VersionFormset()
+        else:
+            context_data['formset'] = VersionFormset()
+        return context_data
+
 
 class ProductUpdateView(UpdateView):
+    """Класс для редактирования продукта и его версий"""
     model = Product
     form_class = ProductForm
 
@@ -48,21 +63,25 @@ class ProductUpdateView(UpdateView):
         return context_data
 
     def form_valid(self, form):
-        formset = self.get_context_data()['formset']
-        self.object = form.save()
+        context = self.get_context_data()
+        formset = context['formset']
         if formset.is_valid():
+            self.object = form.save()
             formset.instance = self.object
-            form.save()
-
-        return super().form_valid(form)
+            formset.save()
+            return super(ProductUpdateView, self).form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 class ProductDeleteView(DeleteView):
+    """Класс для удаления карточек с продуктами."""
     model = Product
     success_url = reverse_lazy('catalog:product_list')
 
 
 class BlogListView(ListView):
+    """Класс для вывода главной страницы раздела - блог."""
     model = BlogWrite
 
     def get_queryset(self, *args, **kwargs):
@@ -72,6 +91,7 @@ class BlogListView(ListView):
 
 
 class BlogDetailView(DetailView):
+    """Класс для вывода детальной информации о статье."""
     model = BlogWrite
 
     def get_object(self, queryset=None):
@@ -82,6 +102,7 @@ class BlogDetailView(DetailView):
 
 
 class BlogCreateView(CreateView):
+    """Класс для создания карточки со статьей."""
     model = BlogWrite
     fields = ('heading', 'slug', 'content', 'photo', 'created_at', 'is_published', "views_count")
     success_url = reverse_lazy('catalog:blog')
@@ -95,6 +116,7 @@ class BlogCreateView(CreateView):
 
 
 class BlogUpdateView(UpdateView):
+    """Класс для редактирования карточки со статьей."""
     model = BlogWrite
     fields = ('heading', 'slug', 'content', 'photo', 'created_at', 'is_published', "views_count")
 
@@ -110,6 +132,7 @@ class BlogUpdateView(UpdateView):
 
 
 class BlogDeleteView(DeleteView):
+    """Класс для удаления карточки со статьей."""
     model = BlogWrite
     success_url = reverse_lazy('catalog:blog')
 

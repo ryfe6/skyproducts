@@ -13,6 +13,7 @@ pillow = "^10.2.0"
 ipython = "^8.22.2"
 slugify = "^0.0.1"
 pytils = "^0.4.1"
+django-crispy-forms = "^2.1"
 
 
 [build-system]

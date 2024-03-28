@@ -1,27 +1,47 @@
 from django import forms
-
+from django.forms import BooleanField
 from catalog.models import Product, Version
 
 
-class ProductForm(forms.ModelForm):
+class StyleFormMixin:
+    """Миксин класс для красивого вывода форм."""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if isinstance(field, BooleanField):
+                field.widget.attrs['class'] = 'form-check-input'
+            else:
+                field.widget.attrs['class'] = 'form-control'
+
+
+class ProductForm(StyleFormMixin, forms.ModelForm):
+    """Класс форма для работы с продуктами."""
     class Meta:
         model = Product
         fields = '__all__'
 
-    def clean(self):
-        cleaned_data = self.cleaned_data['name']
-        cleaned_description = self.cleaned_data['description']
-        list_including = ('казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция',
-                          'радар')
+    def clean_sample(self, model_attribute: str, attribute_name: str):
+        """Метод для избежания дублирования кода в clean_.."""
+        cleaned_data = self.cleaned_data[model_attribute]
+        forbidden_words = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция",
+                           "радар"]
+        if cleaned_data.lower() in forbidden_words:
+            raise forms.ValidationError(f'В {attribute_name} присутствуют запрещенные слова!')
+        return cleaned_data
 
-        for word in list_including:
-            if word in cleaned_data or word in cleaned_description:
-                raise forms.ValidationError(f'Запрещено использование слова - "{word}"')
+    def clean_name(self):
+        """Проверка названия товара"""
+        cleaned_data = self.clean_sample('name', 'названии')
+        return cleaned_data
 
-        return cleaned_data, cleaned_description
+    def clean_description(self):
+        """Проверка описания товара"""
+        cleaned_data = self.clean_sample('description', 'описании')
+        return cleaned_data
 
 
-class VersionForm(forms.ModelForm):
+class VersionForm(StyleFormMixin, forms.ModelForm):
+    """Класс форма для работы с версиями продукта."""
     model = Version
     fields = '__all__'
 
