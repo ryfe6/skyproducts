@@ -21,4 +21,5 @@ urlpatterns = [
     path('catalog/product_edit/<int:pk>', ProductUpdateView.as_view(), name='product_update'),
     path('catalog/product_delete/<int:pk>', ProductDeleteView.as_view(), name='product_delete')
 
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,
+                                                                               document_root=settings.STATIC_ROOT)
