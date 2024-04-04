@@ -1,5 +1,6 @@
 import slugify
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 from django.forms import inlineformset_factory
@@ -26,12 +27,13 @@ class ProductsDetailView(DetailView):
     context_object_name = 'item'
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """Класс для создания продукта."""
     model = Product
     form_class = ProductForm
     # fields = ('name', 'description', 'img', 'category', 'price', 'created_at', 'updated_at')
     success_url = reverse_lazy('catalog:product_list')
+    login_url = reverse_lazy('users:login')
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -43,18 +45,23 @@ class ProductCreateView(CreateView):
             context_data['formset'] = VersionFormset()
         return context_data
 
+    def form_valid(self, form):
+        user_ = form.save(commit=False)
+        user_.author = self.request.user
+        return super().form_valid(form)
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """Класс для редактирования продукта и его версий"""
     model = Product
     form_class = ProductForm
+    login_url = reverse_lazy('users:login')
 
     def get_success_url(self, *args, **kwargs):
         return reverse('catalog:product_update', args=[self.get_object().pk])
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-
         VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
         if self.request.method == 'POST':
             context_data['formset'] = VersionFormset(self.request.POST, instance=self.object)
@@ -74,10 +81,11 @@ class ProductUpdateView(UpdateView):
             return self.form_invalid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """Класс для удаления карточек с продуктами."""
     model = Product
     success_url = reverse_lazy('catalog:product_list')
+    login_url = reverse_lazy('users:login')
 
 
 class BlogListView(ListView):
@@ -135,4 +143,3 @@ class BlogDeleteView(DeleteView):
     """Класс для удаления карточки со статьей."""
     model = BlogWrite
     success_url = reverse_lazy('catalog:blog')
-

@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth import get_user_model
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -13,6 +13,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='Цена')
     created_at = models.DateField(verbose_name='Дата создания')
     updated_at = models.DateField(verbose_name='Дата последнего изменения')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Автор', **NULLABLE)
 
     def __str__(self):
         return self.name
@@ -43,6 +44,7 @@ class BlogWrite(models.Model):
     created_at = models.DateField(verbose_name='Дата создания')
     is_published = models.BooleanField(default=True)
     views_count = models.IntegerField(default=0, verbose_name='количество просмотров')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Автор', **NULLABLE)
 
     def __str__(self):
         return self.heading

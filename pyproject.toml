@@ -7,13 +7,15 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-django = "^5.0.3"
 psycopg2-binary = "^2.9.9"
 pillow = "^10.2.0"
 ipython = "^8.22.2"
 slugify = "^0.0.1"
 pytils = "^0.4.1"
 django-crispy-forms = "^2.1"
+djoser = "^2.2.2"
+python-jose = "^3.3.0"
+django = "4.2"
 
 
 [build-system]
