@@ -18,7 +18,8 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
     """Класс форма для работы с продуктами."""
     class Meta:
         model = Product
-        fields = '__all__'
+        #fields = '__all__'
+        exclude = ('author',)
 
     def clean_sample(self, model_attribute: str, attribute_name: str):
         """Метод для избежания дублирования кода в clean_.."""
