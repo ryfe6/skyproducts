@@ -16,7 +16,7 @@ class Command(BaseCommand):
         moderator_group.permissions.add(Permission.objects.get(codename='delete_product'))
 
         # Введите _email пользователя, который будет наделен правами модератора
-        _email = "denis.koptelev@gmail.com"
+        _email = "-"
         if _email == "_":
             print("Группа moderator создана")
         else:
