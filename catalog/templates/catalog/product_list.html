@@ -26,10 +26,12 @@
                                             <li>
                                                 <a href="{% url 'catalog:product_view' items.pk %}"
                                                    class="btn btn-primary">Посмотреть</a>
+                                                {% if perms.catalog.change_product or items.author == request.user %}
                                                 <a href="{% url 'catalog:product_update' items.pk %}"
                                                    class="btn btn-primary">Изменить</a>
                                                 <a href="{% url 'catalog:product_delete' items.pk %}"
                                                    class="btn btn-primary">Удалить</a>
+                                                {% endif %}
                                             </li>
 
                                             <li><p class="text-black">{{ items.description|slice:100 }}</p></li>

@@ -8,8 +8,6 @@ from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, BlogWrite, Version
 
 
-# Create your views here.
-
 class CatalogListView(ListView):
     """Класс для вывода главной страницы."""
     model = Product
@@ -31,7 +29,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     """Класс для создания продукта."""
     model = Product
     form_class = ProductForm
-    # fields = ('name', 'description', 'img', 'category', 'price', 'created_at', 'updated_at')
     success_url = reverse_lazy('catalog:product_list')
     login_url = reverse_lazy('users:login')
 

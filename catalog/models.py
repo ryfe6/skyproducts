@@ -21,6 +21,12 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
+        permissions = (
+            ("cancel_product_publication", "Can cancel product publication"),
+            ("change_product_description", "Can change product description"),
+            ("change_product_category", "Can change product category"),
+        )
+
 
 
 class Category(models.Model):

@@ -1,0 +1,110 @@
+[
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "name": "Бекенд разработчик",
+    "description": "Курс по основам бекенд разработки",
+    "img": "poducts/бекенд_cMU0h0x.jpg",
+    "category": 1,
+    "price": 100000,
+    "created_at": "2024-03-05",
+    "updated_at": "2024-03-05",
+    "author": null
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "name": "Фронтенд разработчик",
+    "description": "Курс разработки сайтов",
+    "img": "poducts/frontent_HhkfoBu.png",
+    "category": 1,
+    "price": 120000,
+    "created_at": "2024-03-05",
+    "updated_at": "2024-03-05",
+    "author": null
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 3,
+  "fields": {
+    "name": "Поварское дело",
+    "description": "Курсовая по поварскому делу",
+    "img": "poducts/повар.jpg",
+    "category": 2,
+    "price": 15000,
+    "created_at": "2024-03-05",
+    "updated_at": "2024-03-05",
+    "author": null
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 4,
+  "fields": {
+    "name": "Бекенд ДЗ",
+    "description": "Домашняя работа бекенд разработчика",
+    "img": "poducts/backend_GUTWsI0.png",
+    "category": 3,
+    "price": 10000,
+    "created_at": "2024-03-09",
+    "updated_at": "2024-03-09",
+    "author": null
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 6,
+  "fields": {
+    "name": "Тесты по python",
+    "description": "Самые свежие тесты по pythonbvvvv",
+    "img": "poducts/test_6vlx93A.jpg",
+    "category": 3,
+    "price": 500,
+    "created_at": "2024-03-25",
+    "updated_at": "2024-03-06",
+    "author": null
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 10,
+  "fields": {
+    "name": "фулстак",
+    "description": "За 2 дня обучаем фулстаку с гарантией трудоустройства. Мы точно не хотим на вас нажиться)",
+    "img": "",
+    "category": 1,
+    "price": 10000,
+    "created_at": "2024-03-25",
+    "updated_at": "2024-03-06",
+    "author": 4
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "name": "Курсы",
+    "description": "Продаются курсы"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "name": "Курсовые",
+    "description": "Продаются курсовые работы"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 3,
+  "fields": {
+    "name": "Домашняя работа",
+    "description": "Продаются домашние работы"
+  }
+}
+]
